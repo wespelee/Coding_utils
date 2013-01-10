@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/home/wespe/geo_work/commit_tree/arm-linux/Geovision/sdk_lib/DM368/av_capture/framework.geo/csl/usermod'
+let g:netrw_dirhist_2='/home/wespe/geo_work/commit_tree/arm-linux/Geovision/sdk_lib/DM368/av_capture/framework.geo/csl/usermod/src'
+let g:netrw_dirhist_3='/home/wespe/geo_work/commit_tree/arm-linux/Geovision/sdk_lib/DM368'
+let g:netrw_dirhist_4='/home/wespe/geo_work/commit_tree/arm-linux/Geovision/sdk_lib'
