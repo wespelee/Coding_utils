@@ -104,6 +104,21 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+# For Fedora
+if [ -f /usr/share/bash-completion/bash_completion ] && ! shopt -oq posix; then
+    . /usr/share/bash-completion/bash_completion
+fi
+
+for i in /etc/bash_completion.d/*.bash; do
+    if [ -r "$i" ]; then
+        if [ "$PS1" ]; then
+            . "$i"
+        else
+            . "$i" >/dev/null
+        fi
+    fi
+done
+
 #set vi style
 #set -o vi
 
