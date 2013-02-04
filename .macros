@@ -1,0 +1,4 @@
+pu pmac2            root^M^~taipei101^M^~cat /build-info^Mifconfig^M
+pu pmac3            ifconfig eth0 192.168.1.92 netmask 255.255.248.0^M
+pu pmac4            mount -t nfs -o nolock 192.168.1.91:/tftpboot /nfs^M
+pu pmac5            sh /opt/ipnc/av_capture_load.sh^M
