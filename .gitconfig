@@ -1,0 +1,10 @@
+[user]
+	name = Jian-Hui Lee
+	email = wespe.ljh@gmail.com
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	log = auto
+[core]
+	editor = vim
