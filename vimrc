@@ -112,3 +112,8 @@ function! LoadCscope()
     endif
 endfunction
 au BufEnter /* call LoadCscope()
+
+" Type "e %%/" for expand current directory
+" cabbr <expr> %% expand('%:p:h')
+" Use \e key combination
+nnoremap <Leader>e :e <C-R>=expand('%:p:h') . '/'<CR>
