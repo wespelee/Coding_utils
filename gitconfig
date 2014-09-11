@@ -8,3 +8,7 @@
 	log = auto
 [core]
 	editor = vim
+[diff]
+    external = /home/wespe/my_scripts/gitdiffwrap.sh
+[pager]
+    diff =
