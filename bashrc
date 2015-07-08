@@ -133,9 +133,20 @@ done
 }
 
 search() {
-    grep -r -n -s -I --color=auto --exclude-dir=\.svn "$1" *
+    grep -r -n -s -I --color=auto --exclude-dir=\.svn "$*" *
 }
 
 function git_diff() {
     git diff --no-ext-diff -w "$@" | vim -R -
 }
+
+alias vi="vim"
+
+alias irssi_jienhui='irssi --connect=irc.freenode.net --nick=jienhui --password=3939889'
+
+alias dmesg='dmesg --human'
+
+alias gi='. /home/$USER/my_scripts/git-info.sh'
+
+# Tmuxinator
+export EDITOR=vim
