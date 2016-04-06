@@ -133,16 +133,20 @@ done
 }
 
 search() {
-    grep -r -n -s -I --color=auto --exclude-dir=\.svn "$*" *
+    grep -r -n -s -a --color=auto --exclude-dir=\.svn "$*" *
 }
 
-function git_diff() {
+git_diff() {
     git diff --no-ext-diff -w "$@" | vim -R -
+}
+
+vim_diff_tab() {
+    vim -p $(git diff --name-only) -c "tabdo :Gdiff"
 }
 
 alias vi="vim"
 
-alias irssi_jienhui='irssi --connect=irc.freenode.net --nick=jienhui --password=3939889'
+alias irssi_jienhui='irssi --connect=chat.freenode.net --nick=jienhui --password=3939889'
 
 alias dmesg='dmesg --human'
 
@@ -150,3 +154,16 @@ alias gi='. /home/$USER/my_scripts/git-info.sh'
 
 # Tmuxinator
 export EDITOR=vim
+
+# Powerline
+if [ -f `which powerline-daemon` ]; then
+    powerline-daemon -q
+    POWERLINE_BASH_CONTINUATION=1
+    POWERLINE_BASH_SELECT=1
+    . /usr/share/powerline/bash/powerline.sh
+fi
+
+if [ -x /usr/bin/vimx ]; then
+    alias vi='vimx'
+    alias vim='vimx'
+fi
