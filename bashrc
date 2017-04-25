@@ -133,7 +133,7 @@ done
 }
 
 search() {
-    grep -r -n -s -a --color=auto --exclude-dir=\.svn "$*" *
+    grep -r -n -s -a --color=auto --exclude-dir=\.svn --exclude=\*.{o,la,a,so} "$*" *
 }
 
 git_diff() {
@@ -164,6 +164,6 @@ if [ -f `which powerline-daemon` ]; then
 fi
 
 if [ -x /usr/bin/vimx ]; then
-    alias vi='vimx'
-    alias vim='vimx'
+    alias vi='vimx -p'
+    alias vim='vimx -p'
 fi
