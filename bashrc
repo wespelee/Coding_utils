@@ -133,7 +133,7 @@ done
 }
 
 search() {
-    grep -r -n -s -a --color=auto --exclude-dir=\.svn --exclude=\*.{o,la,a,so} "$*" *
+    grep -r -n -s -a --color=auto --exclude-dir=\.svn --exclude=\*.{o,la,a,so} --exclude={cscope.out,cscope.in.out,cscope.po.out} "$*" *
 }
 
 git_diff() {
