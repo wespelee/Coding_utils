@@ -30,14 +30,17 @@ font pango:WenQuanYi Zen Hei Sharp Regular 11
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+#bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec gnome-terminal
 #bindsym $mod+Return exec xterm
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+#bindsym $mod+d exec dmenu_run
+# Fix dmenu losing focus after press key-binding
+bindsym $mod+d exec bemenu-run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -162,4 +165,15 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
 # bindsym XF86AudioPlay exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
 bindsym XF86AudioPlay exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
-bindsym Print exec "scrot -e 'mv $f ~/Snapshots'" 
+bindsym $mod+Shift+n exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+bindsym $mod+Shift+b exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+
+# For i3 X server
+# bindsym Print exec "scrot -e 'mv $f ~/Snapshots'" 
+
+# For sway wayland
+bindsym Print exec --no-startup-id grim ~/Snapshots/$(date +'screenshot_%F-%H%M%S.png') 
+bindsym Shift+Print exec --no-startup-id slurp | grim -g - ~/Snapshots/$(date +'screenshot_%F-%H%M%S.png') 
+bindsym $mod+Pause exec swaylock -i/home/ljh/Downloads/e1.png --scaling fill
+
+
