@@ -133,7 +133,11 @@ done
 }
 
 search() {
-    grep -r -n -s -a --color=auto --exclude-dir=\.svn --exclude=\*.{o,la,a,so} --exclude={cscope.out,cscope.in.out,cscope.po.out} "$*" *
+    grep -r -n -s -a --color=auto --exclude-dir=\.svn --exclude=\*.{o,la,a,so,obj,so.*,swp} --exclude={cscope.out,cscope.in.out,cscope.po.out} "$*" *
+# -r: recursive
+# -n: prefix with line number
+# -s: suppress error messages
+# -a: prcess a binary file
 }
 
 git_diff() {
@@ -152,6 +156,8 @@ alias dmesg='dmesg --human'
 
 alias gi='. /home/$USER/my_scripts/git-info.sh'
 
+export PROMPT_COMMAND="echo -n \$(date +%H:%M:%S)\ "
+
 # Tmuxinator
 export EDITOR=vim
 
@@ -167,3 +173,13 @@ if [ -x /usr/bin/vimx ]; then
     alias vi='vimx -p'
     alias vim='vimx -p'
 fi
+
+alias diffd='diff -qrN $1 $2'
+
+alias fname='find -name'
+
+# Zephyr
+export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
+export ZEPHYR_SDK_INSTALL_DIR=/home/ljh/work/zephyr-tools
+export PATH=~/.local/bin:"$PATH"
+
