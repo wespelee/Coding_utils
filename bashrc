@@ -31,6 +31,7 @@ fi
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color) color_prompt=yes;;
+    xterm-256color) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -50,7 +51,8 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\A \[\033[01;32m\]\u\[\033[00m\]@\[\033[01;35m\]\h\[\033[36m\]\$ \[\033[00m\]'
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -64,6 +66,16 @@ xterm*|rxvt*)
 *)
     ;;
 esac
+
+custom_prompt() {
+    CUR_DIR=`pwd`
+    GIT_BRANCH_NAME=`git branch --show-current 2>&1`
+    if [ $? != 0 ]; then
+        GIT_BRANCH_NAME=
+    fi
+    CUSTOM_INFO="\033[01;33m$CUR_DIR \033[01;34m$GIT_BRANCH_NAME\033[01;00m\n" 
+    echo -ne "$CUSTOM_INFO"
+}
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -156,18 +168,18 @@ alias dmesg='dmesg --human'
 
 alias gi='. /home/$USER/my_scripts/git-info.sh'
 
-export PROMPT_COMMAND="echo -n \$(date +%H:%M:%S)\ "
+export PROMPT_COMMAND="custom_prompt"
 
 # Tmuxinator
 export EDITOR=vim
 
 # Powerline
-if [ `which powerline-daemon` ]; then
-    powerline-daemon -q
-    POWERLINE_BASH_CONTINUATION=1
-    POWERLINE_BASH_SELECT=1
-    . /usr/share/powerline/bash/powerline.sh
-fi
+#if [ `which powerline-daemon` ]; then
+#    powerline-daemon -q
+#    POWERLINE_BASH_CONTINUATION=1
+#    POWERLINE_BASH_SELECT=1
+#    . /usr/share/powerline/bash/powerline.sh
+#fi
 
 if [ -x /usr/bin/vimx ]; then
     alias vi='vimx -p'
