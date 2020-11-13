@@ -16,6 +16,23 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
+# Bash Color
+COLOR_RED="\e[31;40m"
+COLOR_GREEN="\e[32;40m"
+COLOR_YELLOW="\e[33;40m"
+COLOR_BLUE="\e[34;40m"
+COLOR_MAGENTA="\e[35;40m"
+COLOR_CYAN="\e[36;40m"
+
+COLOR_RED_BOLD="\e[31;1m"
+COLOR_GREEN_BOLD="\e[32;1m"
+COLOR_YELLOW_BOLD="\e[33;1m"
+COLOR_BLUE_BOLD="\e[34;1m"
+COLOR_MAGENTA_BOLD="\e[35;1m"
+COLOR_CYAN_BOLD="\e[36;1m"
+
+COLOR_NONE="\e[0m"
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
@@ -66,16 +83,6 @@ xterm*|rxvt*)
 *)
     ;;
 esac
-
-custom_prompt() {
-    CUR_DIR=`pwd`
-    GIT_BRANCH_NAME=`git branch --show-current 2>&1`
-    if [ $? != 0 ]; then
-        GIT_BRANCH_NAME=
-    fi
-    CUSTOM_INFO="\033[01;33m$CUR_DIR \033[01;34m$GIT_BRANCH_NAME\033[01;00m\n" 
-    echo -ne "$CUSTOM_INFO"
-}
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -131,6 +138,10 @@ for i in /etc/bash_completion.d/*.bash; do
     fi
 done
 
+# Git
+if [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ] && ! shopt -oq posix; then
+    . /usr/share/git-core/contrib/completion/git-prompt.sh
+fi
 #set vi style
 #set -o vi
 
@@ -167,6 +178,26 @@ alias irssi_jienhui='irssi --connect=chat.freenode.net --nick=jienhui --password
 alias dmesg='dmesg --human'
 
 alias gi='. /home/$USER/my_scripts/git-info.sh'
+
+custom_prompt() {
+    PREV_EXIT_CODE="$?"
+    CUR_DIR=`pwd`
+    CUSTOM_INFO="${COLOR_YELLOW_BOLD}${CUR_DIR}${COLOR_NONE}"
+    GIT_BRANCH_NAME=$(__git_ps1 '(%s)')
+    CUSTOM_INFO="${CUSTOM_INFO} ${COLOR_BLUE_BOLD}${GIT_BRANCH_NAME}${COLOR_NONE}"
+    if [ $PREV_EXIT_CODE -ne 0 ]; then
+        PREV_EXIT_CODE_NAME="${PREV_EXIT_CODE}"
+        if [ $PREV_EXIT_CODE -gt 128 ]; then
+            PREV_EXIT_CODE_SIGNAL=$(( $PREV_EXIT_CODE - 128 ))
+            PREV_EXIT_CODE_SIGNAL=$(kill -l $PREV_EXIT_CODE_SIGNAL 2>/dev/null)
+            if [ -n "$PREV_EXIT_CODE_SIGNAL" ]; then
+                PREV_EXIT_CODE_NAME="${PREV_EXIT_CODE}: SIG${PREV_EXIT_CODE_SIGNAL}"
+            fi
+        fi
+        CUSTOM_INFO="${CUSTOM_INFO} ${COLOR_RED_BOLD}${PREV_EXIT_CODE_NAME}${COLOR_NONE}" 
+    fi
+    echo -ne "$CUSTOM_INFO\n"
+}
 
 export PROMPT_COMMAND="custom_prompt"
 
